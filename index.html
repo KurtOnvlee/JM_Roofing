@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JM Roofing Studio</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&family=Open+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy: #1a2744;
+  --navy-mid: #243156;
+  --red: #c0392b;
+  --red-bright: #e74c3c;
+  --red-dim: rgba(192,57,43,0.1);
+  --gold: #f39c12;
+  --white: #ffffff;
+  --off: #f8f9fa;
+  --grey: #6c757d;
+  --light: #e9ecef;
+  --cream: #fafafa;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Open Sans', sans-serif; background: var(--cream); color: var(--navy); min-height: 100vh; font-size: 14px; line-height: 1.6; }
+
+.header {
+  background: var(--navy);
+  padding: 0 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 68px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 20px rgba(0,0,0,0.3);
+}
+
+.header-left { display: flex; align-items: center; gap: 14px; }
+
+.header-logo-img {
+  height: 44px;
+  width: auto;
+  object-fit: contain;
+  border-radius: 6px;
+}
+
+.header-logo-text {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--white);
+  letter-spacing: 0.02em;
+  display: none;
+}
+
+.header-logo-text span { color: var(--red-bright); }
+
+.header-right { text-align: right; }
+
+.header-badge {
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.2);
+  color: rgba(255,255,255,0.85);
+  font-size: 11px;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-family: 'Montserrat', sans-serif;
+  letter-spacing: 0.06em;
+}
+
+.powered {
+  font-size: 10px;
+  color: rgba(255,255,255,0.35);
+  font-family: 'Open Sans', sans-serif;
+  letter-spacing: 0.06em;
+  margin-top: 3px;
+}
+
+.powered span { color: var(--red-bright); }
+
+.nav {
+  background: var(--white);
+  border-bottom: 2px solid var(--light);
+  padding: 0 2rem;
+  display: flex;
+  gap: 0;
+  overflow-x: auto;
+  position: sticky;
+  top: 68px;
+  z-index: 90;
+}
+.nav::-webkit-scrollbar { display: none; }
+
+.nav-tab {
+  padding: 15px 18px;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--grey);
+  cursor: pointer;
+  border: none;
+  background: none;
+  border-bottom: 3px solid transparent;
+  white-space: nowrap;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'Montserrat', sans-serif;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin-bottom: -2px;
+}
+
+.nav-tab:hover { color: var(--navy); }
+.nav-tab.active { color: var(--navy); border-bottom-color: var(--red); }
+
+.main { max-width: 880px; margin: 0 auto; padding: 2rem 1.5rem; }
+.page { display: none; }
+.page.active { display: block; }
+
+.welcome-hero {
+  background: var(--navy);
+  border-radius: 12px;
+  padding: 2.5rem;
+  margin-bottom: 1.5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.welcome-hero::before {
+  content: '';
+  position: absolute;
+  top: -50px; right: -50px;
+  width: 220px; height: 220px;
+  background: radial-gradient(circle, rgba(192,57,43,0.18) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.welcome-hero h1 {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 26px;
+  font-weight: 800;
+  color: var(--white);
+  margin-bottom: 8px;
+  line-height: 1.2;
+}
+
+.welcome-hero h1 span { color: var(--red-bright); }
+
+.welcome-hero p {
+  color: rgba(255,255,255,0.6);
+  font-size: 14px;
+  max-width: 480px;
+  line-height: 1.7;
+  margin-top: 8px;
+}
+
+.red-bar { width: 48px; height: 3px; background: var(--red); margin: 14px 0; border-radius: 2px; }
+
+.welcome-tagline {
+  background: rgba(192,57,43,0.15);
+  border: 1px solid rgba(192,57,43,0.3);
+  border-radius: 8px;
+  padding: 14px 18px;
+  margin-top: 18px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: rgba(255,255,255,0.85);
+  letter-spacing: 0.02em;
+}
+
+.quick-actions { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin-bottom: 1.5rem; }
+
+.action-card {
+  background: var(--white);
+  border: 2px solid var(--light);
+  border-radius: 10px;
+  padding: 18px;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: center;
+  text-decoration: none;
+  display: block;
+}
+
+.action-card:hover { border-color: var(--red); box-shadow: 0 4px 18px rgba(192,57,43,0.1); transform: translateY(-2px); }
+.action-icon { font-size: 26px; margin-bottom: 8px; }
+.action-label { font-size: 11px; font-weight: 700; color: var(--navy); font-family: 'Montserrat', sans-serif; text-transform: uppercase; letter-spacing: 0.05em; }
+.action-sub { font-size: 11px; color: var(--grey); margin-top: 3px; }
+
+.card {
+  background: var(--white);
+  border: 1px solid var(--light);
+  border-radius: 10px;
+  padding: 1.5rem;
+  margin-bottom: 14px;
+  box-shadow: 0 1px 6px rgba(0,0,0,0.04);
+}
+
+.card-header { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 1rem; }
+.card-title { font-family: 'Montserrat', sans-serif; font-size: 15px; font-weight: 700; color: var(--navy); text-transform: uppercase; letter-spacing: 0.05em; }
+.card-sub { font-size: 12px; color: var(--grey); margin-top: 3px; }
+
+.prompt-card {
+  background: var(--navy);
+  border-radius: 8px;
+  padding: 1.25rem;
+  margin-bottom: 10px;
+  position: relative;
+  overflow: hidden;
+}
+
+.prompt-card::after {
+  content: attr(data-icon);
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 40px;
+  opacity: 0.07;
+}
+
+.prompt-card h3 { font-family: 'Montserrat', sans-serif; font-size: 13px; font-weight: 700; color: rgba(255,255,255,0.9); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.05em; }
+.prompt-card p { font-size: 12px; color: rgba(255,255,255,0.55); line-height: 1.7; max-width: 88%; }
+
+.task-list { list-style: none; }
+.task-item { display: flex; align-items: flex-start; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--light); cursor: pointer; }
+.task-item:last-child { border-bottom: none; }
+.task-check { width: 20px; height: 20px; border-radius: 4px; border: 2px solid var(--light); flex-shrink: 0; margin-top: 2px; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
+.task-check.checked { background: var(--red); border-color: var(--red); }
+.task-check.checked::after { content: '✓'; color: white; font-size: 11px; font-weight: 700; }
+.task-text { font-size: 13px; color: var(--navy); flex: 1; line-height: 1.5; }
+.task-text.done { color: var(--grey); text-decoration: line-through; }
+.task-meta { font-size: 11px; color: var(--grey); margin-top: 2px; }
+.tag { display: inline-block; font-size: 10px; padding: 2px 8px; border-radius: 20px; font-weight: 700; flex-shrink: 0; font-family: 'Montserrat', sans-serif; letter-spacing: 0.05em; text-transform: uppercase; }
+.tag-urgent { background: var(--red-dim); color: var(--red); }
+.tag-soon { background: rgba(243,156,18,0.1); color: var(--gold); }
+
+.script-card { background: var(--white); border: 1px solid var(--light); border-radius: 8px; overflow: hidden; margin-bottom: 10px; }
+.script-header { padding: 14px 16px; display: flex; align-items: center; gap: 12px; cursor: pointer; user-select: none; transition: background 0.15s; }
+.script-header:hover { background: var(--off); }
+.script-num { width: 30px; height: 30px; border-radius: 6px; background: var(--navy); color: var(--white); font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-family: 'Montserrat', sans-serif; }
+.script-title { font-size: 13px; font-weight: 600; color: var(--navy); flex: 1; font-family: 'Montserrat', sans-serif; }
+.script-platform { font-size: 11px; color: var(--grey); }
+.script-chevron { font-size: 12px; color: var(--grey); }
+.script-body { display: none; padding: 0 16px 16px; border-top: 1px solid var(--light); }
+.script-body.open { display: block; }
+.script-section { margin-top: 14px; }
+.script-section-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--red); margin-bottom: 6px; font-family: 'Montserrat', sans-serif; }
+.script-section-text { font-size: 13px; color: var(--navy); line-height: 1.8; background: var(--off); padding: 12px; border-radius: 6px; border-left: 3px solid var(--red); }
+.dl-btn { display: inline-flex; align-items: center; gap: 6px; background: var(--navy); color: var(--white); border: none; border-radius: 6px; padding: 7px 14px; font-size: 11px; cursor: pointer; margin-top: 10px; transition: background 0.2s; font-family: 'Montserrat', sans-serif; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; }
+.dl-btn:hover { background: var(--red); }
+
+.upload-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 1rem; }
+.upload-area { border: 2px dashed var(--light); border-radius: 10px; padding: 2.5rem 1.5rem; text-align: center; cursor: pointer; transition: all 0.2s; background: var(--off); }
+.upload-area:hover { border-color: var(--red); background: rgba(192,57,43,0.03); }
+.upload-icon { font-size: 32px; margin-bottom: 10px; }
+.upload-title { font-family: 'Montserrat', sans-serif; font-size: 12px; font-weight: 700; color: var(--navy); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px; }
+.upload-sub { font-size: 11px; color: var(--grey); }
+
+.stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 12px; }
+.stat-card { background: var(--white); border: 1px solid var(--light); border-radius: 8px; padding: 16px; text-align: center; border-top: 3px solid var(--red); }
+.stat-val { font-family: 'Montserrat', sans-serif; font-size: 28px; font-weight: 800; color: var(--navy); }
+.stat-label { font-size: 10px; color: var(--grey); margin-top: 4px; text-transform: uppercase; letter-spacing: 0.08em; font-weight: 600; font-family: 'Montserrat', sans-serif; }
+
+.video-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 12px; }
+.video-card { background: var(--white); border: 1px solid var(--light); border-radius: 8px; overflow: hidden; transition: all 0.2s; }
+.video-card:hover { border-color: var(--red); box-shadow: 0 4px 14px rgba(192,57,43,0.08); }
+.video-thumb { width: 100%; aspect-ratio: 16/9; background: var(--navy); display: flex; align-items: center; justify-content: center; }
+.cs-thumb { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+.cs-thumb span { font-size: 28px; }
+.cs-thumb p { font-size: 10px; color: rgba(255,255,255,0.4); text-transform: uppercase; letter-spacing: 0.08em; font-family: 'Montserrat', sans-serif; }
+.video-info { padding: 12px; }
+.video-title { font-size: 13px; font-weight: 600; color: var(--navy); line-height: 1.4; margin-bottom: 4px; font-family: 'Montserrat', sans-serif; }
+.video-desc { font-size: 11px; color: var(--grey); line-height: 1.5; }
+
+.chat-container { display: flex; flex-direction: column; height: 380px; }
+.chat-messages { flex: 1; overflow-y: auto; padding: 1rem; background: var(--off); border-radius: 8px; margin-bottom: 12px; display: flex; flex-direction: column; gap: 10px; border: 1px solid var(--light); }
+.chat-msg { max-width: 80%; }
+.chat-msg.from-kurt { align-self: flex-end; }
+.chat-msg.from-jard { align-self: flex-start; }
+.chat-bubble { padding: 10px 14px; border-radius: 12px; font-size: 13px; line-height: 1.6; }
+.from-kurt .chat-bubble { background: var(--navy); color: var(--white); border-bottom-right-radius: 3px; }
+.from-jard .chat-bubble { background: var(--white); color: var(--navy); border: 1px solid var(--light); border-bottom-left-radius: 3px; }
+.chat-time { font-size: 10px; color: var(--grey); margin-top: 3px; text-align: right; }
+.from-jard .chat-time { text-align: left; }
+.chat-sender { font-size: 11px; font-weight: 700; color: var(--grey); margin-bottom: 3px; font-family: 'Montserrat', sans-serif; text-transform: uppercase; letter-spacing: 0.05em; }
+.chat-input-row { display: flex; gap: 8px; }
+.chat-input-row input { flex: 1; border: 2px solid var(--light); border-radius: 8px; padding: 10px 14px; font-size: 13px; font-family: 'Open Sans', sans-serif; background: var(--white); outline: none; transition: border-color 0.2s; }
+.chat-input-row input:focus { border-color: var(--navy); }
+.chat-send { background: var(--red); color: var(--white); border: none; border-radius: 8px; padding: 10px 18px; font-size: 11px; cursor: pointer; font-family: 'Montserrat', sans-serif; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; transition: background 0.2s; }
+.chat-send:hover { background: var(--navy); }
+.chat-note { font-size: 11px; color: var(--grey); text-align: center; margin-top: 6px; }
+
+.footer { text-align: center; padding: 2rem; font-size: 12px; color: var(--grey); border-top: 1px solid var(--light); margin-top: 2rem; }
+.footer strong { color: var(--red); }
+.footer span { color: var(--navy); font-weight: 600; }
+
+@media(max-width: 480px) {
+  .main { padding: 1rem; }
+  .welcome-hero { padding: 1.5rem; }
+  .welcome-hero h1 { font-size: 20px; }
+  .upload-grid { grid-template-columns: 1fr; }
+  .video-grid { grid-template-columns: 1fr; }
+  .nav-tab { padding: 13px 12px; font-size: 10px; }
+}
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-left">
+    <img
+      class="header-logo-img"
+      src="https://lh3.googleusercontent.com/d/1u674l2zTSL5vTqTM7CUIZpzxXHlgxA9_"
+      alt="JM Roofing"
+      onerror="this.style.display='none';document.getElementById('logo-fb').style.display='block'"
+    >
+    <div id="logo-fb" class="header-logo-text" style="display:none">JM<span>.</span> Roofing</div>
+  </div>
+  <div class="header-right">
+    <div class="header-badge">Content Studio</div>
+    <div class="powered">Powered by <span>The Marketplace NZ</span></div>
+  </div>
+</header>
+
+<nav class="nav">
+  <button class="nav-tab active" onclick="switchTab('home')" data-tab="home">🏠 Home</button>
+  <button class="nav-tab" onclick="switchTab('filming')" data-tab="filming">🎬 Filming</button>
+  <button class="nav-tab" onclick="switchTab('scripts')" data-tab="scripts">📄 Scripts</button>
+  <button class="nav-tab" onclick="switchTab('upload')" data-tab="upload">⬆️ Upload</button>
+  <button class="nav-tab" onclick="switchTab('metrics')" data-tab="metrics">📊 Metrics</button>
+  <button class="nav-tab" onclick="switchTab('learn')" data-tab="learn">🎓 Learn</button>
+  <button class="nav-tab" onclick="switchTab('messages')" data-tab="messages">💬 Messages</button>
+</nav>
+
+<main class="main">
+
+  <!-- HOME -->
+  <div id="home" class="page active">
+    <div class="welcome-hero">
+      <h1>Welcome back, <span>Jard.</span></h1>
+      <div class="red-bar"></div>
+      <p>20 years of roofing excellence behind you. Now lets get it in front of every homeowner in Waikato who needs you.</p>
+      <div class="welcome-tagline">
+        "Quality Roofing. Our Brand, Our Culture, Our Promise."
+      </div>
+    </div>
+
+    <div class="quick-actions">
+      <a href="#" onclick="switchTab('filming');return false;" class="action-card">
+        <div class="action-icon">✅</div>
+        <div class="action-label">This week</div>
+        <div class="action-sub">What to film</div>
+      </a>
+      <a href="#" onclick="switchTab('scripts');return false;" class="action-card">
+        <div class="action-icon">📄</div>
+        <div class="action-label">Scripts</div>
+        <div class="action-sub">Read and film</div>
+      </a>
+      <a href="#" onclick="switchTab('upload');return false;" class="action-card">
+        <div class="action-icon">⬆️</div>
+        <div class="action-label">Upload</div>
+        <div class="action-sub">Send footage</div>
+      </a>
+      <a href="#" onclick="switchTab('messages');return false;" class="action-card">
+        <div class="action-icon">💬</div>
+        <div class="action-label">Message Kurt</div>
+        <div class="action-sub">Questions</div>
+      </a>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div>
+          <div class="card-title">Live update prompts</div>
+          <div class="card-sub">When life happens on the job, share it. These are your best content moments.</div>
+        </div>
+      </div>
+      <div class="prompt-card" data-icon="🏠">
+        <h3>Just finished a re-roof?</h3>
+        <p>Film a 60 second walkthrough before you pack up. Before and after. Show the problem, show the fix. No script needed, just talk. This is your most powerful content.</p>
+      </div>
+      <div class="prompt-card" data-icon="🔧" style="margin-top:10px">
+        <h3>Found a hidden problem on a job?</h3>
+        <p>Film it right there on the roof. "Most homeowners have no idea this is happening until its too late." That one line will stop every homeowner in Cambridge from scrolling.</p>
+      </div>
+      <div class="prompt-card" data-icon="⛈️" style="margin-top:10px">
+        <h3>Storm came through last night?</h3>
+        <p>Jump on stories. "If you are in Waikato and the storm hit your area, here are the three things to check on your roof today." Right now, in the moment. That is the content that gets shared.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- FILMING -->
+  <div id="filming" class="page">
+    <div class="card">
+      <div class="card-header">
+        <div>
+          <div class="card-title">This weeks filming checklist</div>
+          <div class="card-sub">Tick each one off as you go. Film on site whenever possible, real roofs, real work.</div>
+        </div>
+        <span id="filming-pct" style="font-size:12px;color:var(--grey);font-family:'Montserrat',sans-serif;font-weight:700;">0% done</span>
+      </div>
+      <ul class="task-list" id="filming-tasks"></ul>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div>
+          <div class="card-title">Pre shoot checklist</div>
+          <div class="card-sub">Before you press record, run through these every time.</div>
+        </div>
+      </div>
+      <ul class="task-list" id="preshoot-tasks"></ul>
+    </div>
+  </div>
+
+  <!-- SCRIPTS -->
+  <div id="scripts" class="page">
+    <div class="card">
+      <div class="card-header">
+        <div>
+          <div class="card-title">Your video scripts</div>
+          <div class="card-sub">Read it through, know the shape of it, then put it down and talk naturally. Your 20 years of experience is the script.</div>
+        </div>
+      </div>
+      <div id="script-list"></div>
+    </div>
+  </div>
+
+  <!-- UPLOAD -->
+  <div id="upload" class="page">
+    <div class="card">
+      <div class="card-header">
+        <div>
+          <div class="card-title">Upload your footage</div>
+          <div class="card-sub">Raw footage first, then your approved finals. We handle the rest.</div>
+        </div>
+      </div>
+      <div class="upload-grid">
+        <div>
+          <div style="font-size:10px;font-weight:700;color:var(--grey);margin-bottom:8px;text-transform:uppercase;letter-spacing:0.08em;font-family:'Montserrat',sans-serif;">Upload 1 — Raw footage</div>
+          <div class="upload-area" onclick="alert('In the live version this connects to your Google Drive folder directly.')">
+            <div class="upload-icon">📹</div>
+            <div class="upload-title">Raw video file</div>
+            <div class="upload-sub">Straight from your phone or camera</div>
+          </div>
+        </div>
+        <div>
+          <div style="font-size:10px;font-weight:700;color:var(--grey);margin-bottom:8px;text-transform:uppercase;letter-spacing:0.08em;font-family:'Montserrat',sans-serif;">Upload 2 — Final approved</div>
+          <div class="upload-area" onclick="alert('In the live version this connects to your Google Drive folder directly.')">
+            <div class="upload-icon">✅</div>
+            <div class="upload-title">Final video file</div>
+            <div class="upload-sub">Only after you have approved the edit</div>
+          </div>
+        </div>
+      </div>
+      <div style="background:rgba(243,156,18,0.08);border:1px solid rgba(243,156,18,0.25);border-radius:8px;padding:12px 16px;font-size:12px;color:var(--navy);margin-top:4px;line-height:1.6;">
+        <strong style="color:var(--gold);">Why two uploads?</strong> Raw footage goes to The Marketplace for editing. Final approved video gets scheduled and posted. You approve every single video before anything goes live. Nothing posts without your yes.
+      </div>
+    </div>
+  </div>
+
+  <!-- METRICS -->
+  <div id="metrics" class="page">
+    <div style="background:var(--navy);border-radius:10px;padding:2rem;text-align:center;color:var(--white);margin-bottom:1rem;">
+      <div style="font-family:'Montserrat',sans-serif;font-size:16px;font-weight:800;color:rgba(255,255,255,0.9);margin-bottom:6px;text-transform:uppercase;letter-spacing:0.05em;">Metrics Dashboard</div>
+      <p style="font-size:12px;color:rgba(255,255,255,0.45);margin-bottom:0;">Live analytics coming soon. Kurt updates your numbers after every monthly review session.</p>
+    </div>
+    <div class="stats-grid">
+      <div class="stat-card"><div class="stat-val">—</div><div class="stat-label">Followers</div></div>
+      <div class="stat-card"><div class="stat-val">—</div><div class="stat-label">Total reach</div></div>
+      <div class="stat-card"><div class="stat-val">—</div><div class="stat-label">Profile visits</div></div>
+      <div class="stat-card"><div class="stat-val">—</div><div class="stat-label">DM enquiries</div></div>
+      <div class="stat-card"><div class="stat-val">—</div><div class="stat-label">Video views</div></div>
+      <div class="stat-card"><div class="stat-val">—</div><div class="stat-label">Saves and shares</div></div>
+    </div>
+  </div>
+
+  <!-- LEARN -->
+  <div id="learn" class="page">
+    <div style="background:rgba(26,39,68,0.06);border:1px solid rgba(26,39,68,0.1);border-radius:8px;padding:1rem 1.25rem;margin-bottom:1.5rem;font-size:12px;color:var(--navy);line-height:1.6;">
+      <strong>Note from Kurt:</strong> These tutorials will help you film professional content on your phone. Watch them in order before your first filming session.
+    </div>
+    <div class="video-grid">
+      <div class="video-card">
+        <div class="video-thumb"><iframe src="https://www.youtube.com/embed/2sHVssy5pCw" allowfullscreen loading="lazy" style="width:100%;height:100%;border:none;"></iframe></div>
+        <div class="video-info"><div class="video-title">How to film yourself with your phone</div><div class="video-desc">Framing, eye level, and where to put your face</div></div>
+      </div>
+      <div class="video-card">
+        <div class="video-thumb"><div class="cs-thumb"><span>🎬</span><p>Coming soon</p></div></div>
+        <div class="video-info"><div class="video-title">Filming on a roof — safety and framing</div><div class="video-desc">How to film site content safely and make it look professional</div></div>
+      </div>
+      <div class="video-card">
+        <div class="video-thumb"><iframe src="https://www.youtube.com/embed/DFmQf5Uo2dU" allowfullscreen loading="lazy" style="width:100%;height:100%;border:none;"></iframe></div>
+        <div class="video-info"><div class="video-title">Blackmagic Camera App — full tutorial</div><div class="video-desc">Make your phone film like a pro camera. Watch this first.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MESSAGES -->
+  <div id="messages" class="page">
+    <div class="card">
+      <div class="card-header">
+        <div>
+          <div class="card-title">Messages with Kurt</div>
+          <div class="card-sub">Leave a message or ask a question. Kurt checks this daily.</div>
+        </div>
+        <div style="width:8px;height:8px;border-radius:50%;background:#27ae60;" title="Kurt is active"></div>
+      </div>
+      <div class="chat-container">
+        <div class="chat-messages" id="chat-messages">
+          <div class="chat-msg from-jard">
+            <div class="chat-sender">Kurt</div>
+            <div class="chat-bubble">Hey Jard! Welcome to your JM Roofing Studio. This is where we keep everything in one place. Scripts, filming checklist, footage uploads, and your metrics. No more losing things.</div>
+            <div class="chat-time">Today</div>
+          </div>
+          <div class="chat-msg from-jard">
+            <div class="chat-bubble">20 years of reputation is the secret weapon. We are just going to put it in front of a lot more people. Lets build something great together.</div>
+            <div class="chat-time">Today</div>
+          </div>
+        </div>
+        <div class="chat-input-row">
+          <input type="text" id="chat-input" placeholder="Type a message to Kurt..." onkeydown="if(event.key==='Enter')sendMessage()"/>
+          <button class="chat-send" onclick="sendMessage()">Send</button>
+        </div>
+        <p class="chat-note">Beta version. Messages saved locally. Full integration coming soon.</p>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<footer class="footer">
+  Built for <span>Jardon Miller</span> by <strong>The Marketplace NZ</strong> &middot; themarketplace.co.nz &middot; Beta v1.0
+</footer>
+
+<script>
+var filmingTasks = [
+  { id:1, text:'How to spot a leak before it gets bad, talking head 90 seconds', meta:'Facebook and Instagram Reels · EDUCATE', done:false, tag:'urgent' },
+  { id:2, text:'Before and after re-roof, show the job from start to finish', meta:'Facebook and Instagram · INSPIRE', done:false, tag:'urgent' },
+  { id:3, text:'Story, film on site today, show what you are working on', meta:'Facebook and Instagram Stories · RELATE', done:false, tag:'soon' },
+  { id:4, text:'5 signs your roof needs attention this winter, talking head', meta:'Facebook and TikTok · EDUCATE', done:false, tag:'soon' },
+  { id:5, text:'Why the cheapest roofer always costs you more in the end', meta:'Facebook and Instagram · TRUST', done:false, tag:'soon' },
+];
+
+var preshootTasks = [
+  { id:101, text:'Phone charged to at least 80%', done:false },
+  { id:102, text:'Blackmagic Camera app open and settings checked', done:false },
+  { id:103, text:'Background is clean, no clutter or safety hazards visible', done:false },
+  { id:104, text:'Light is in front of you, not behind you', done:false },
+  { id:105, text:'Eyes at one third from the top of the frame', done:false },
+  { id:106, text:'Do a 10 second test recording and watch it back', done:false },
+  { id:107, text:'If filming on site, make sure safety gear looks professional on camera', done:false },
+];
+
+var scripts = [
+  {
+    num: 1,
+    title: 'How to spot a roof leak before it gets bad',
+    platform: 'Facebook and Instagram Reels',
+    hook: '"Most homeowners find out their roof is leaking when they see water on the ceiling. By then the damage has been there for months. Here is how to catch it before it costs you thousands."',
+    body: '"There are four things you can check yourself without getting on the roof.\n\nFirst, check your gutters. If you see granules collecting in there, the small sand-like particles, your roof coating is breaking down and water is not being repelled the way it should be.\n\nSecond, check the fascia boards, those are the boards that run along the edge of your roof. If they are soft, discoloured, or peeling, water is sitting where it should not be.\n\nThird, check your ceiling in the top floor of your house. Any brown staining, bubbling paint, or soft spots are signs water has been getting in for a while.\n\nFourth, check your attic after heavy rain. A torch and five minutes is all it takes. If you can see daylight through the roof boards or smell damp, call someone. Do not wait. A small repair now is a hundred dollars. A full re-roof because you waited six months is ten to twenty thousand. I have seen it a hundred times."',
+    cta: '"If you want me to take a look at your roof before winter hits, my details are in the bio. First call is free."',
+    cta_word: 'Comment ROOF and I will send you a free pre-winter roof checklist.'
+  },
+  {
+    num: 2,
+    title: '5 signs your roof needs attention this winter',
+    platform: 'Facebook and TikTok',
+    hook: '"Winter is coming and your roof is the one thing standing between your family and the elements. Here are five signs it is not ready."',
+    body: '"Sign one. Moss and algae growth. In the Waikato climate this is more common than people think. Moss holds moisture against your roofing material and breaks it down over time.\n\nSign two. Missing or cracked tiles or iron. Even one missing tile is an entry point for water. After any storm, walk around your property and look up.\n\nSign three. Rusting flashings. The flashings are the metal strips around your chimney, skylights, and where the roof meets walls. If they are rusting or lifting, water gets in at those joints. That is one of the most common leaks I see.\n\nSign four. Sagging sections. If any part of your roof line looks like it is dipping, you have a structural issue. Do not delay on that one.\n\nSign five. Your last roof inspection was more than two years ago. Most people only think about their roof when there is already a problem. An inspection catches it before it becomes an emergency. I offer free inspections across the Waikato."',
+    cta: '"If you have seen any of these on your property, do not wait for winter to find out the hard way. My details are in the bio."',
+    cta_word: 'Comment WINTER and I will book your free pre-winter roof inspection.'
+  },
+  {
+    num: 3,
+    title: 'Why the cheapest roofer always costs you more',
+    platform: 'Facebook and Instagram',
+    hook: '"I have been called in to fix someone elses cheap roofing job more times than I can count. Here is what that actually costs."',
+    body: '"When a homeowner calls me to fix a roofing job that went wrong, the first thing I do is find out who did the original work. More often than not it was someone who quoted low, cut corners on materials, and did not warrant their work.\n\nThe problem with roofing is that bad work is not always visible immediately. It might take one winter, or two, before the leaks start. By then the damage is not just the roof. It is the ceiling, the insulation, the wall linings.\n\nWhat looked like a saving of two thousand dollars ends up costing eight to twelve thousand to put right properly. I have seen it dozens of times.\n\nBefore you hire anyone, ask three questions. Are they licensed? Do they warrant their work and for how long? Do they have references you can actually call? If the answer to any of those is no or vague, walk away.\n\nA roof is not the place to save money."',
+    cta: '"Happy to answer any questions before you commit to any roofing work, whether it is with me or anyone else. Find me in the bio."',
+    cta_word: 'Comment QUOTE and I will give you a free no-obligation assessment.'
+  },
+];
+
+var fTasks = [...filmingTasks];
+var pTasks = [...preshootTasks];
+
+function renderFilming() {
+  var done = fTasks.filter(function(t){ return t.done; }).length;
+  var pct = fTasks.length ? Math.round(done / fTasks.length * 100) : 0;
+  document.getElementById('filming-pct').textContent = pct + '% done';
+
+  document.getElementById('filming-tasks').innerHTML = fTasks.map(function(t) {
+    return '<li class="task-item" onclick="toggleFilming(' + t.id + ')">' +
+      '<div class="task-check ' + (t.done ? 'checked' : '') + '"></div>' +
+      '<div style="flex:1">' +
+      '<div class="task-text ' + (t.done ? 'done' : '') + '">' + t.text + '</div>' +
+      '<div class="task-meta">' + t.meta + '</div>' +
+      '</div>' +
+      '<span class="tag tag-' + t.tag + '">' + (t.tag === 'urgent' ? 'This week' : 'Soon') + '</span>' +
+      '</li>';
+  }).join('');
+
+  document.getElementById('preshoot-tasks').innerHTML = pTasks.map(function(t) {
+    return '<li class="task-item" onclick="togglePre(' + t.id + ')">' +
+      '<div class="task-check ' + (t.done ? 'checked' : '') + '"></div>' +
+      '<div class="task-text ' + (t.done ? 'done' : '') + '">' + t.text + '</div>' +
+      '</li>';
+  }).join('');
+}
+
+function toggleFilming(id) {
+  var t = fTasks.find(function(x){ return x.id===id; });
+  if (t) { t.done = !t.done; renderFilming(); }
+}
+
+function togglePre(id) {
+  var t = pTasks.find(function(x){ return x.id===id; });
+  if (t) { t.done = !t.done; renderFilming(); }
+}
+
+document.getElementById('script-list').innerHTML = scripts.map(function(s, i) {
+  return '<div class="script-card">' +
+    '<div class="script-header" onclick="toggleScript(' + i + ')">' +
+    '<div class="script-num">' + s.num + '</div>' +
+    '<div class="script-title">' + s.title + '</div>' +
+    '<div class="script-platform">' + s.platform + '</div>' +
+    '<div class="script-chevron" id="chev-' + i + '">▼</div>' +
+    '</div>' +
+    '<div class="script-body" id="sbody-' + i + '">' +
+    '<div class="script-section"><div class="script-section-label">Hook — say this first</div><div class="script-section-text">' + s.hook + '</div></div>' +
+    '<div class="script-section"><div class="script-section-label">Your story</div><div class="script-section-text" style="white-space:pre-line">' + s.body + '</div></div>' +
+    '<div class="script-section"><div class="script-section-label">Call to action</div><div class="script-section-text">' + s.cta + '</div></div>' +
+    '<div class="script-section"><div class="script-section-label">Comment CTA — say this at the end</div><div class="script-section-text">' + s.cta_word + '</div></div>' +
+    '<button class="dl-btn" onclick="downloadScript(' + i + ')">Download script ' + s.num + '</button>' +
+    '</div></div>';
+}).join('');
+
+function toggleScript(i) {
+  var body = document.getElementById('sbody-' + i);
+  var chev = document.getElementById('chev-' + i);
+  var open = body.classList.contains('open');
+  body.classList.toggle('open', !open);
+  chev.textContent = open ? '▼' : '▲';
+}
+
+function downloadScript(i) {
+  var s = scripts[i];
+  var txt = 'VIDEO ' + s.num + '\n' + s.title + '\nPlatform: ' + s.platform + '\n\nHOOK:\n' + s.hook + '\n\nSTORY:\n' + s.body + '\n\nCTA:\n' + s.cta + '\n\nCOMMENT CTA:\n' + s.cta_word + '\n\nThe Marketplace NZ';
+  var blob = new Blob([txt], {type:'text/plain'});
+  var a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'JMRoofing-Script-' + s.num + '.txt';
+  a.click();
+}
+
+function sendMessage() {
+  var input = document.getElementById('chat-input');
+  var text = input.value.trim();
+  if (!text) return;
+  var msgs = document.getElementById('chat-messages');
+  msgs.innerHTML += '<div class="chat-msg from-kurt"><div class="chat-sender">Jard</div><div class="chat-bubble">' + text + '</div><div class="chat-time">Just now</div></div>';
+  input.value = '';
+  msgs.scrollTop = msgs.scrollHeight;
+  setTimeout(function() {
+    msgs.innerHTML += '<div class="chat-msg from-jard"><div class="chat-sender">Kurt</div><div class="chat-bubble">Got it Jard, I will get back to you shortly. Keep building.</div><div class="chat-time">Just now</div></div>';
+    msgs.scrollTop = msgs.scrollHeight;
+  }, 1200);
+}
+
+function switchTab(id) {
+  document.querySelectorAll('.page').forEach(function(s){ s.classList.remove('active'); });
+  document.querySelectorAll('.nav-tab').forEach(function(t){ t.classList.remove('active'); });
+  var sec = document.getElementById(id);
+  if (sec) sec.classList.add('active');
+  var tab = document.querySelector('[data-tab="' + id + '"]');
+  if (tab) tab.classList.add('active');
+}
+
+renderFilming();
+</script>
+</body>
+</html>
